@@ -53,6 +53,7 @@ def startworking():
     for file in unfinished:
         running = 1
         print(file)
+        print('\n')
         os.system("notepad.exe " + file)
         while running:
             running = checkIfProcessRunning('notepad')
