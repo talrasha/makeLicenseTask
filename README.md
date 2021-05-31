@@ -5,7 +5,10 @@ https://drive.google.com/file/d/1KOvJ1so4w7rOTPSaYj-CpYIxu7uKN4DF/view?usp=shari
 download all projects and unzip into the folder
    
 2. Run in Windows Terminal 
+
 python task.py
+
+OR run in PyCharm
    
 3. Read the file open in NOTEPAD, Determine the license, Write it/them into result file in EXCEL at the according row
 
@@ -15,7 +18,7 @@ python task.py
 
 4. Close NOTEPAD and Continue until you finish all files
 
-* To quit without finish, please close the terminal directly to stop the whileloop
+* To quit without finish, please close the terminal/end running in PyCharm directly to stop the whileloop
 
 5. Remember to SAVE the file in EXCEL
 
