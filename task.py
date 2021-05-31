@@ -5,10 +5,15 @@ import random
 import subprocess
 import psutil
 
+global installPythonPackage
+installPythonPackage = ['pip3 install pandas numpy psutil']
+os.system('start cmd /k ' + installPythonPackage[0])
+
 desired_width=320
 pd.set_option('display.width', desired_width)
 np.set_printoptions(linewidth=desired_width)
 pd.set_option('display.max_columns',25)
+
 
 
 def checkIfProcessRunning(processName):
