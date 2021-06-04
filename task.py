@@ -6,8 +6,14 @@ import subprocess
 import psutil
 
 global installPythonPackage
-installPythonPackage = ['pip3 install pandas numpy psutil']
-os.system('start cmd /k ' + installPythonPackage[0])
+# with MAC
+subprocess.call(['pip3', 'install', 'pandas'])
+subprocess.call(['pip3', 'install', 'numpy'])
+subprocess.call(['pip3', 'install', 'psutil'])
+
+# with windows
+#installPythonPackage = ['pip3 install pandas numpy psutil']
+#os.system('start cmd /k ' + installPythonPackage[0])
 
 desired_width=320
 pd.set_option('display.width', desired_width)
@@ -21,14 +27,26 @@ def checkIfProcessRunning(processName):
     Check if there is any running process that contains the given name processName.
     '''
     #Iterate over the all the running process
-    for proc in psutil.process_iter():
-        try:
-            # Check if process name contains the given name string.
-            if processName.lower() in proc.name().lower():
-                return True
-        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
-            pass
-    return False
+
+    # With MAC
+    process = subprocess.Popen('pgrep '+processName, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    my_pid, err = process.communicate()
+    if my_pid:
+        return True
+    else:
+        return False
+    # Up till here is fo mac
+
+    # This is for windows
+    #for proc in psutil.process_iter():
+    #    try:
+    #        # Check if process name contains the given name string.
+    #        if processName.lower() in proc.name().lower():
+    #            return True
+    #    except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+    #        pass
+    #return False
+    # UP till here is for windows
 
 ############### Get 'howmany' random files ###############
 ############### Save a randomFiles.txt file ###############
@@ -50,7 +68,10 @@ def getRandomFileList(howmany):
 ############### Start work with the unfinished business ###############
 
 def startworking():
-    os.system("start excel.exe " + 'results.csv')
+    # with MAC
+    subprocess.call(['open', '-a', 'Microsoft Excel', 'results.csv'])
+    # with windows
+    #os.system("start excel.exe " + 'results.csv')
     df = pd.read_csv('results.csv')
     unfinished = df.loc[df['license'].isna(), 'file'].values.tolist()
     print("There are still "+str(len(unfinished))+" files to go! You are almost there!\n")
@@ -59,9 +80,12 @@ def startworking():
         running = 1
         print(file)
         print('\n')
-        os.system("notepad.exe " + file)
+        # with MAC
+        subprocess.call(['open', '-a', 'TextEdit', file])
+        # with windows
+        # os.system("notepad.exe " + file)
         while running:
-            running = checkIfProcessRunning('notepad')
+            running = checkIfProcessRunning('TextEdit')
 
         #break
 
